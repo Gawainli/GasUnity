@@ -25,17 +25,22 @@ namespace Haro.GAS
             _data = data;
             _name = nameof(data);
         }
+        
+        public string GetName()
+        {
+            return _name;
+        }
 
-        public Attribute(AttributeData data, AttributeSet ownerSet)
+        public Attribute(AttributeData data, string name, AttributeSet ownerSet = null)
         {
             _data = data;
-            _name = nameof(data);
+            _name = name;
             OwnerSet = ownerSet;
         }
 
-        public bool IsAscAttribute()
+        public bool IsSystemAttribute()
         {
-            return true;
+            return OwnerSet is null;
         }
 
         public void SetCurrentValue(float newValue, AttributeSet ownerSet)

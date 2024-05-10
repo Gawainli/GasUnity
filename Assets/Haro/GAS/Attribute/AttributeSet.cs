@@ -26,7 +26,7 @@ namespace Haro.GAS
 
         public Attribute GetAttribute(AttributeData data)
         {
-            return new Attribute(data, this);
+            return new Attribute(data, data.ToString(), this);
         }
     }
 }
