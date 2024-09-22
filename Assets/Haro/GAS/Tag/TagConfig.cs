@@ -7,6 +7,7 @@ namespace Haro.GAS
     [CreateAssetMenu(fileName = "GAS/TagConfig", menuName = "TagConfig", order = 0)]
     public class TagConfig : ScriptableObject
     {
+        //TODO: 可以使用editor window来读取一个文本文件，然后生成tag，这个文件可以和服务器同步
         [Searchable] public List<string> tagTexts;
 
         [Button]
