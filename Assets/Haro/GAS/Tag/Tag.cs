@@ -1,49 +1,46 @@
 ﻿using System;
-using System.Text;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Haro.GAS
 {
     public struct Tag : IEquatable<Tag>
     {
-        private readonly string[] _strTags;
-        private string _str;
 
-        private Tag(string[] strTags)
-        {
-            _strTags = strTags;
-            var sb = new StringBuilder();
-            for (int i = 0; i < _strTags.Length; i++)
-            {
-                sb.Append(_strTags[i]);
-                if (i < _strTags.Length - 1)
-                {
-                    sb.Append(".");
-                }
-            }
-            _str = sb.ToString();
-        }
+        private readonly Dictionary<int, int> _hashedTags;
+        private readonly string _str;
 
-        public static Tag Create(in string tagText)
+        private Tag(string tagText)
         {
             if (string.IsNullOrEmpty(tagText))
             {
-                throw new ArgumentException($"{tagText} is null or empty.");
+                throw new ArgumentException($"{nameof(tagText)} is null or empty.");
             }
 
-            return new Tag(tagText.Split('.'));
+            var tags = tagText.Split('.').Where(t => !string.IsNullOrWhiteSpace(t)).ToArray();
+            _hashedTags = new Dictionary<int, int>(tags.Length);
+            
+            for (int i = 0; i < tags.Length; i++)
+            {
+                _hashedTags[i] = GetHash(tags[i]);
+            }
+
+            _str = tagText;
         }
 
         public bool Match(in Tag other)
         {
-            for (int i = 0; i < Math.Min(_strTags.Length, other._strTags.Length); i++)
+            var minLength = Math.Min(_hashedTags.Count, other._hashedTags.Count);
+
+            for (var i = 0; i < minLength; i++)
             {
-                if (_strTags[i] != other._strTags[i])
+                if (!_hashedTags.TryGetValue(i, out var selfHash) || selfHash != other._hashedTags[i])
                 {
                     return false;
                 }
             }
 
-            return true;
+            return _hashedTags.Count <= other._hashedTags.Count;
         }
 
         public override string ToString()
@@ -53,19 +50,14 @@ namespace Haro.GAS
 
         public bool Equals(Tag other)
         {
-            if (_strTags == null || other._strTags == null)
+            if (_hashedTags.Count != other._hashedTags.Count)
             {
                 return false;
             }
 
-            if (_strTags.Length != other._strTags.Length)
+            foreach (var pair in _hashedTags)
             {
-                return false;
-            }
-
-            for (int i = 0; i < _strTags.Length; i++)
-            {
-                if (_strTags[i] != other._strTags[i])
+                if (!other._hashedTags.TryGetValue(pair.Key, out int otherHash) || pair.Value != otherHash)
                 {
                     return false;
                 }
@@ -93,5 +85,26 @@ namespace Haro.GAS
         {
             return !left.Equals(right);
         }
+
+        #region Create Function
+
+        private static int GetHash(string input)
+        {
+            if (TagCollection.HashCache.TryGetValue(input, out var hash))
+            {
+                return hash;
+            }
+            
+            hash = input.GetHashCode();
+            TagCollection.HashCache[input] = hash;
+            return hash;
+        }
+
+        public static Tag Create(in string tagText)
+        {
+            return new Tag(tagText);
+        }
+
+        #endregion
     }
 }

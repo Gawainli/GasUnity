@@ -338,6 +338,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 099a0f23b0d24593b12c118d2188ee24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tags:
+  - "Skill.A.B\r"
 --- !u!4 &2045700517
 Transform:
   m_ObjectHideFlags: 0

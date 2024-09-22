@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Haro.GAS
 {
-    public abstract class AttributeSet
+    public class AttributeSet : ScriptableObject
     {
-        public abstract void Initialize();
-        
         public virtual void PreAttributeChange(Attribute attribute, float newValue)
         {
         }
@@ -22,11 +18,6 @@ namespace Haro.GAS
 
         public virtual void PostAttributeBaseChange(Attribute attribute, float oldValue, float newValue)
         {
-        }
-
-        public Attribute GetAttribute(AttributeData data)
-        {
-            return new Attribute(data, data.ToString(), this);
         }
     }
 }

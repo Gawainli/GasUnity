@@ -1,18 +1,29 @@
-﻿using Haro.GAS;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Haro.GAS;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Code
 {
     public class TestEntity : MonoBehaviour
     {
-        public MutableTagCombine Tag = new MutableTagCombine();
-        public TestAttributeSet AttributeSet = new TestAttributeSet();
+        [ValueDropdown("GetAllTags")]
+        public List<string> tags;
+        
+        private MutableTagCombine _mutableTagCombine = new MutableTagCombine();
+        
+        private IEnumerable GetAllTags()
+        {
+            return TagCollection.TagTexts;
+        }
         
         private void Start()
         {
-            AttributeSet.Initialize();
-            var attr = AttributeSet.GetAttribute(AttributeSet.MaxHealth);
-            Debug.Log($"attr name: {attr.GetName()}");
+            var t1 = Tag.Create("A.a");
+            var t2 = Tag.Create("A.a.b.c");
+            
+            Debug.Log($"t1: {t1} t2: {t2} t2 is sub of t1: {t2.Match(t1)}");
         }
     }
 }
