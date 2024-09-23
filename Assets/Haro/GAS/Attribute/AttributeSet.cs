@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Haro.GAS
 {
-    public class AttributeSet : MonoBehaviour
+    public class AttributeSet
     {
         protected Dictionary<string, Attribute> attributeNameMap = new Dictionary<string, Attribute>();
         public virtual void PreAttributeChange(Attribute attribute, float newValue)

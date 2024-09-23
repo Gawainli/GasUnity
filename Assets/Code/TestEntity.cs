@@ -9,11 +9,10 @@ namespace GasGame
 {
     public class TestEntity : MonoBehaviour
     {
-        [ValueDropdown("GetAllTags")]
-        public List<string> tags;
-        
+        [ValueDropdown("GetAllTags")] public List<string> tags;
+
         private MutableTagCombine _mutableTagCombine = new MutableTagCombine();
-        private PlayerAttributeSet _playerAttributeSet;
+
         private IEnumerable GetAllTags()
         {
             return TagCollection.TagTexts;
@@ -21,17 +20,14 @@ namespace GasGame
 
         private void Awake()
         {
-            _playerAttributeSet = GetComponent<PlayerAttributeSet>();
         }
 
         private void Start()
         {
             var t1 = Tag.Create("A.a");
             var t2 = Tag.Create("A.a.b.c");
-            
-            Debug.Log($"t1: {t1} t2: {t2} t2 is sub of t1: {t2.Match(t1)}");
 
-            Debug.Log(_playerAttributeSet.hp);
+            Debug.Log($"t1: {t1} t2: {t2} t2 is sub of t1: {t2.Match(t1)}");
         }
     }
 }
