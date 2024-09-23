@@ -13,9 +13,9 @@ namespace GasGame
         public PlayerAttributeSet()
         {
             //==自动化创建开始
-            hp = new Attribute(new AttributeData(), "hp", this);
-            mana = new Attribute(new AttributeData(), "mana", this);
-            attack = new Attribute(new AttributeData(), "attack", this);
+            hp = CreateAttribute("hp");
+            mana = CreateAttribute("mana");
+            attack = CreateAttribute("attack");
 
         }
     }

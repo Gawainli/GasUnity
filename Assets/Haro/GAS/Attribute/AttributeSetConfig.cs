@@ -72,15 +72,15 @@ namespace Haro.GAS
             }
 
             classText = classText.Replace(KeyAutoGen, KeyAutoGen + stringBuilder.ToString());
-            
+
             //生成attribute创建
             stringBuilder.Clear();
             stringBuilder.Append("\n");
             foreach (var attributeNameText in attributeNameTexts)
             {
-                stringBuilder.Append($"            {attributeNameText} = new Attribute(new AttributeData(), \"{attributeNameText}\", this);\n");
+                stringBuilder.Append($"            {attributeNameText} = CreateAttribute(\"{attributeNameText}\");\n");
             }
-            
+
             classText = classText.Replace(KeyAutoGenNew, KeyAutoGenNew + stringBuilder.ToString());
 
             //写入自动生成类文件

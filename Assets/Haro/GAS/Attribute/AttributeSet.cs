@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Haro.GAS
 {
     public class AttributeSet : MonoBehaviour
     {
+        protected Dictionary<string, Attribute> attributeNameMap = new Dictionary<string, Attribute>();
         public virtual void PreAttributeChange(Attribute attribute, float newValue)
         {
         }
@@ -18,6 +20,18 @@ namespace Haro.GAS
 
         public virtual void PostAttributeBaseChange(Attribute attribute, float oldValue, float newValue)
         {
+        }
+        
+        public Attribute GetAttribute(string attrName)
+        {
+            return attributeNameMap[attrName];
+        }
+        
+        protected Attribute CreateAttribute(string attrName)
+        {
+            var attr = new Attribute(new AttributeData(), attrName, this);
+            attributeNameMap[attrName] = attr;
+            return attr;
         }
     }
 }
