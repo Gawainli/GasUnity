@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Haro.GAS
 {
-    public class AttributeSet : ScriptableObject
+    public class AttributeSet : MonoBehaviour
     {
         public virtual void PreAttributeChange(Attribute attribute, float newValue)
         {

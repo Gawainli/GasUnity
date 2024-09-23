@@ -1,0 +1,14 @@
+﻿using Haro.GAS;
+
+namespace Haro.GAS.Template
+{
+    public partial class AttributeSetTemplate : AttributeSet
+    {
+        //==自动化变量开始
+        
+        public AttributeSetTemplate()
+        {
+            //==自动化创建开始
+        }
+    }
+}

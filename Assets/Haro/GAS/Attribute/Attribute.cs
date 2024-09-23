@@ -10,17 +10,19 @@ namespace Haro.GAS
     {
         private string _name;
         private readonly AttributeData _data;
-        
+
         public AttributeSet OwnerSet { get; set; }
 
-        public Attribute(){}
+        public Attribute()
+        {
+        }
 
         public Attribute(AttributeData data)
         {
             _data = data;
             _name = nameof(data);
         }
-        
+
         public string GetName()
         {
             return _name;
@@ -38,15 +40,23 @@ namespace Haro.GAS
             return OwnerSet is null;
         }
 
-        public void SetCurrentValue(float newValue, AttributeSet ownerSet)
+        public void SetCurrentValue(float newValue)
         {
             var oldValue = _data.CurrentValue;
-            ownerSet?.PreAttributeChange(this, newValue);
+            OwnerSet?.PreAttributeChange(this, newValue);
             _data.CurrentValue = newValue;
-            ownerSet?.PostAttributeChange(this, oldValue, newValue);
+            OwnerSet?.PostAttributeChange(this, oldValue, newValue);
         }
 
-        public float GetCurrentValue(AttributeSet ownerSet)
+        public void SetBaseValue(float newValue)
+        {
+            var oldValue = _data.BaseValue;
+            OwnerSet?.PreAttributeBaseChange(this, newValue);
+            _data.BaseValue = newValue;
+            OwnerSet?.PostAttributeBaseChange(this, oldValue, newValue);
+        }
+
+        public float GetCurrentValue()
         {
             return _data?.CurrentValue ?? 0f;
         }
@@ -54,6 +64,11 @@ namespace Haro.GAS
         public AttributeData GetAttributeData()
         {
             return _data;
+        }
+
+        public override string ToString()
+        {
+            return $"{_name}: {_data.CurrentValue}/{_data.BaseValue}";
         }
     }
 }
