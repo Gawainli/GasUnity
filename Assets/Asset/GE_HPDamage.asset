@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bdd5f41dacd46728e12dff191ad11fc, type: 3}
   m_Name: GE_HPDamage
   m_EditorClassIdentifier: 
-  durationPolicy: 0
+  durationPolicy: 2
   period: 0
   duration: 0
-  executeImmediately: 1
+  executeImmediately: 0
   modifierDefines:
   - attributeName: hp
     modOp: 0
     value: -10
-    calculator: {fileID: 0}
+    calculator: {fileID: 11400000, guid: b4cf08fb8b0534743bcf6b146ef8f88d, type: 2}
